@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arya Ridwan Pratama — Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f9f8f5;
+    --surface: #ffffff;
+    --text: #1a1a18;
+    --muted: #6b6b66;
+    --border: #e4e2db;
+    --accent: #1a1a18;
+    --tag-bg: #f0ede6;
+    --tag-text: #3a3a36;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(249,248,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  section { padding: 6rem 2rem; max-width: 760px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 80px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-img {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 2px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  h1 span { font-weight: 500; }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #333; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { background: var(--surface); border-color: #ccc; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); max-width: 760px; margin: 0 auto; }
+
+  /* SECTION TITLES */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+
+  /* ABOUT */
+  .about-text { color: var(--muted); font-size: 17px; max-width: 600px; }
+  .about-text p + p { margin-top: 1rem; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 0.5rem;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .skill-card:hover { border-color: #bbb; }
+
+  .skill-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--tag-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .skill-level {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .skill-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 0.75rem;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    gap: 16px;
+    margin-top: 0.5rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card:hover { border-color: #aaa; transform: translateY(-2px); }
+
+  .project-info { flex: 1; }
+
+  .project-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .project-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .project-arrow {
+    font-size: 18px;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* LAYANAN */
+  .layanan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 0.5rem;
+  }
+
+  .layanan-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .layanan-card:hover { border-color: #bbb; }
+
+  .layanan-icon {
+    font-size: 24px;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .layanan-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .layanan-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .layanan-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* KONTAK */
+  .kontak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 0.5rem;
+  }
+
+  .kontak-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    display: flex; align-items: center; gap: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .kontak-card:hover { border-color: #aaa; transform: translateY(-2px); }
+
+  .kontak-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--tag-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .kontak-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .kontak-value {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 4rem 1.2rem; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#hero">arya.dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="fade-up">
+    <div class="hero-tag">● Available for projects</div>
+  </div>
+  <img src="foto.jpg" alt="Arya Ridwan Pratama" class="hero-img fade-up delay-1"/>
+  <h1 class="fade-up delay-1">Halo, saya <span>Arya</span> —<br/>Web Developer &<br/>Automation Builder.</h1>
+  <p class="hero-desc fade-up delay-2">Mahasiswa Teknik Informatika UMC yang membangun website dan sistem otomasi untuk UMKM Indonesia. Siap membantu bisnis kamu hadir secara digital.</p>
+  <div class="hero-btns fade-up delay-3">
+    <a href="#layanan" class="btn btn-primary">Lihat Layanan →</a>
+    <a href="#kontak" class="btn btn-outline">Hubungi Saya</a>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">01 — About Me</p>
+  <h2>Sedikit tentang saya</h2>
+  <div class="about-text">
+    <p>Saya Arya Ridwan Pratama, mahasiswa semester 1 Teknik Informatika di Universitas Muhammadiyah Cirebon (UMC). Saya passionate di bidang web development dan automation.</p>
+    <p>Tujuan saya adalah menjadi inovator teknologi yang membantu UMKM Indonesia berkembang melalui digitalisasi, dan melanjutkan studi S2 di Institut Teknologi Bandung (ITB).</p>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <span class="stat-num">1</span>
+      <span class="stat-label">Semester</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3+</span>
+      <span class="stat-label">Projects</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">ITB</span>
+      <span class="stat-label">Target S2</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">02 — Skills</p>
+  <h2>Tech Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML5</div>
+      <div class="skill-level">Mahir</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">CSS3</div>
+      <div class="skill-level">Mahir</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-level">Menengah</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚛️</div>
+      <div class="skill-name">React</div>
+      <div class="skill-level">Sedang Belajar</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:25%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🟢</div>
+      <div class="skill-name">Node.js</div>
+      <div class="skill-level">Sedang Belajar</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:20%"></div></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Automation</div>
+      <div class="skill-level">Menengah</div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:55%"></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">03 — Projects</p>
+  <h2>Proyek Terbaru</h2>
+  <div class="projects-grid">
+    <a href="https://github.com/aryalifetolearn" target="_blank" class="project-card">
+      <div class="project-info">
+        <div class="project-title">Portfolio Website</div>
+        <div class="project-desc">Website portofolio personal yang dibangun dengan HTML, CSS, dan JavaScript murni. Desain minimalis dan responsif.</div>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a href="https://github.com/aryalifetolearn" target="_blank" class="project-card">
+      <div class="project-info">
+        <div class="project-title">Landing Page UMKM</div>
+        <div class="project-desc">Landing page modern untuk UMKM lokal dengan integrasi WhatsApp dan Google Maps.</div>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">WhatsApp API</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+    <a href="https://github.com/aryalifetolearn" target="_blank" class="project-card">
+      <div class="project-info">
+        <div class="project-title">WhatsApp Bot Automation</div>
+        <div class="project-desc">Bot WhatsApp otomatis untuk membalas pesan, konfirmasi order, dan kirim laporan harian ke pemilik toko.</div>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Automation</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- LAYANAN -->
+<section id="layanan">
+  <p class="section-label">04 — Layanan</p>
+  <h2>Apa yang saya tawarkan</h2>
+  <div class="layanan-grid">
+    <div class="layanan-card">
+      <span class="layanan-icon">🖥️</span>
+      <div class="layanan-title">Landing Page</div>
+      <div class="layanan-desc">Halaman promosi satu halaman yang menarik untuk produk atau event kamu.</div>
+      <div class="layanan-price">Rp 500rb – 2jt</div>
+    </div>
+    <div class="layanan-card">
+      <span class="layanan-icon">🏢</span>
+      <div class="layanan-title">Company Profile</div>
+      <div class="layanan-desc">Website multi-halaman profesional untuk memperkenalkan bisnis kamu secara lengkap.</div>
+      <div class="layanan-price">Rp 2jt – 5jt</div>
+    </div>
+    <div class="layanan-card">
+      <span class="layanan-icon">🤖</span>
+      <div class="layanan-title">Bot WhatsApp</div>
+      <div class="layanan-desc">Sistem auto-reply & konfirmasi order otomatis 24 jam tanpa perlu dikelola manual.</div>
+      <div class="layanan-price">Rp 1jt – 3jt</div>
+    </div>
+    <div class="layanan-card">
+      <span class="layanan-icon">🔧</span>
+      <div class="layanan-title">Maintenance</div>
+      <div class="layanan-desc">Perawatan website bulanan: update konten, backup rutin, dan perbaikan bug.</div>
+      <div class="layanan-price">Rp 300rb – 1jt/bln</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- KONTAK -->
+<section id="kontak">
+  <p class="section-label">05 — Kontak</p>
+  <h2>Mari berkolaborasi</h2>
+  <p style="color:var(--muted); font-size:17px; margin-bottom:2rem;">Punya project atau pertanyaan? Saya siap membantu bisnis kamu hadir secara digital.</p>
+  <div class="kontak-grid">
+    <a href="https://wa.me/6281234567890" target="_blank" class="kontak-card">
+      <div class="kontak-icon">💬</div>
+      <div>
+        <div class="kontak-label">WhatsApp</div>
+        <div class="kontak-value">Chat Sekarang</div>
+      </div>
+    </a>
+    <a href="mailto:your@email.com" class="kontak-card">
+      <div class="kontak-icon">✉️</div>
+      <div>
+        <div class="kontak-label">Email</div>
+        <div class="kontak-value">your@email.com</div>
+      </div>
+    </a>
+    <a href="https://linkedin.com/in/arya-ridwan-pratama-500a4836a" target="_blank" class="kontak-card">
+      <div class="kontak-icon">💼</div>
+      <div>
+        <div class="kontak-label">LinkedIn</div>
+        <div class="kontak-value">Arya Ridwan</div>
+      </div>
+    </a>
+    <a href="https://github.com/aryalifetolearn" target="_blank" class="kontak-card">
+      <div class="kontak-icon">🐙</div>
+      <div>
+        <div class="kontak-label">GitHub</div>
+        <div class="kontak-value">aryalifetolearn</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Arya Ridwan Pratama — Built with ♥ & Vibe Coding</p>
+</footer>
+
+</body>
+</html>
